@@ -1,0 +1,13 @@
+name: 'SHA Storage'
+description: 'Github Action for storing results from previous runs by SHA'
+inputs:
+  result:
+    description: 'The most recent result to store'
+    required: false
+    default: 'unknown'
+outputs:
+  result:
+    description: 'Most recent result'
+runs:
+  using: 'node16'
+  main: 'index.js'
