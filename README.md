@@ -19,12 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: last-run
-        uses: bmuller/sha-storage-action@master
+        uses: parallel-markets/sha-storage-action@master
 
       - run: make test
         if: steps.last-run.outputs.result != 'success'
 
-      - uses: bmuller/sha-storage-action@master
+      - uses: parallel-markets/sha-storage-action@master
         with:
           result: success
 ```
@@ -39,7 +39,7 @@ jobs:
       prev-result: ${{ steps.last-run.outputs.result }}
     steps:
       - id: last-run
-        uses: bmuller/sha-storage-action@master
+        uses: parallel-markets/sha-storage-action@master
 
   test:
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
     if: needs.fetch-prev-result.outputs.prev_result != 'success'
     steps:
       - run: make test
-      - uses: bmuller/sha-storage-action@master
+      - uses: parallel-markets/sha-storage-action@master
         with:
           result: success
 ```
