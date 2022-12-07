@@ -3,19 +3,19 @@ description: 'Github Action for storing results from previous runs by SHA'
 inputs:
   result:
     description: 'The most recent result to store'
-    required: false
+    required: true
     default: 'unknown'
   token:
-    description: 'Github Token for access to repo information'
-    required: false
-    default: ''
-  must-match-ref:
-    description: 'Check to make sure the current SHA matches the given ref, error if not'
-    required: false
-    default: 'any'
+    description: >
+      GitHub token for GitHub API requests.
+      When `repository` is modified, set to a personal access token with access to `repository`.
+    required: true
+    default: ${{ github.token }}
 outputs:
   result:
     description: 'Most recent result'
+  deploy_sha:
+    description: 'The current SHA of the default branch of the repo.'
 runs:
   using: 'node16'
-  main: 'index.js'
+  main: 'src/index.js'

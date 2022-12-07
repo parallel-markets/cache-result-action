@@ -1,16 +1,28 @@
 name: ci
 on: push
 
-env:
-  NODE_VERSION: 18.6.0
-
 jobs:
-  test:
+  check-sha-result:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.restore-cache.outputs.result }}
+      deploy_sha: ${{ steps.restore-cache.outputs.deploy_sha }}
+    steps:
+      - id: restore-cache
+        uses: nonrational/sha-storage-action@master
+
+  check:
+    needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - id: last-run
-        uses: bmuller/sha-storage-action@master
+      - run: echo ${{ needs.check-sha-result.result }}
+      - run: echo ${{ needs.check-sha-result.outputs.result }}
+      - run: echo ${{ needs.check-sha-result.outputs.deploy_sha }}
+
+  test:
+    needs: check-sha-result
+    runs-on: ubuntu-latest
+    steps:
+      - uses: nonrational/sha-storage-action@master
         with:
-          must-match-ref: heads/master
-          token: ${{ secrets.GITHUB_TOKEN }}
           result: success
