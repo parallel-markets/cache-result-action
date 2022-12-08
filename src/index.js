@@ -6,7 +6,6 @@ const os = require("os")
 
 const RESULT_PATH = '/tmp/prev-result'
 
-
 const run = async () => {
   const sha = github.context.sha
   core.info(`Running for current SHA ${sha}`)
@@ -60,9 +59,6 @@ const run = async () => {
         ['deploy_sha', refResult.data.object.sha]
       ])
       .write()
-
-    process.exit(0)
-
   } catch(error) {
     core.setFailed(error.message)
   }
