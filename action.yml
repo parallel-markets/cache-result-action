@@ -1,4 +1,4 @@
-name: 'SHA Storage'
+name: 'Cache Result'
 description: 'Github Action for storing results from previous runs by SHA'
 inputs:
   result:
@@ -6,11 +6,12 @@ inputs:
     required: true
     default: 'unknown'
   token:
-    description: >
-      GitHub token for GitHub API requests.
-      When `repository` is modified, set to a personal access token with access to `repository`.
+    description: 'GitHub token for GitHub API requests'
     required: true
     default: ${{ github.token }}
+  key-prefix:
+    description: 'A string that will be added to the cache key when storing a result.'
+    required: false
 outputs:
   result:
     description: 'Most recent result'

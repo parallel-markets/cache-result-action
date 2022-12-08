@@ -64951,8 +64951,9 @@ const run = async () => {
 
     // inputResult will be 'unknown' if we're in "restore only" mode.
     const inputResult = core.getInput('result')
-    const key = 'sha-storage-action-' + sha + '-' + Math.floor(Date.now() / 1000)
-    const cacheKey = await cache.restoreCache([RESULT_PATH], key, ['sha-storage-action-' + sha])
+    const keyPrefix = core.getInput('key-prefix')
+    const key = ['cache-result-action', keyPrefix, sha, Math.floor(Date.now() / 1000)].filter(Boolean).join('-')
+    const cacheKey = await cache.restoreCache([RESULT_PATH], key, ['cache-result-action-' + sha])
 
     let actualResult = inputResult
 
@@ -64977,6 +64978,7 @@ const run = async () => {
       .addTable([
         [{data: 'Output', header: true}, {data: 'Result', header: true}],
         ['result', actualResult],
+        ['key', key],
         ['cache_outcome', cacheOutcome],
         ['deploy_sha', refResult.data.object.sha]
       ])
