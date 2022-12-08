@@ -16,10 +16,10 @@ jobs:
       secondary-deploy_sha: ${{ steps.restore-secondary-cache.outputs.deploy_sha }}
     steps:
       - id: restore-cache
-        uses: parallel-markets/cache-result-action@8bde34bbcb0a2ee18d74f4a79c42c3a7d3de283f
+        uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
 
       - id: restore-secondary-cache
-        uses: parallel-markets/cache-result-action@8bde34bbcb0a2ee18d74f4a79c42c3a7d3de283f
+        uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
         with:
           key-prefix: secondary
 
@@ -35,7 +35,7 @@ jobs:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@8bde34bbcb0a2ee18d74f4a79c42c3a7d3de283f
+      - uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
         with:
           result: success
 
@@ -43,7 +43,7 @@ jobs:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@8bde34bbcb0a2ee18d74f4a79c42c3a7d3de283f
+      - uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
         with:
           result: success
           key-prefix: secondary
