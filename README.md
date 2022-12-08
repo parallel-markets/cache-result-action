@@ -1,4 +1,4 @@
-# SHA Storage Action
+# Cache Result Github Action
 
 Store a result for a given commit SHA in a repo.
 
