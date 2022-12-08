@@ -1,5 +1,5 @@
 {
-  "name": "sha-storage-action",
+  "name": "cache-result-action",
   "version": "0.0.1",
   "description": "Github Action for storing results from previous runs by SHA",
   "main": "index.js",

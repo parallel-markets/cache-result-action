@@ -9,7 +9,7 @@ jobs:
       deploy_sha: ${{ steps.restore-cache.outputs.deploy_sha }}
     steps:
       - id: restore-cache
-        uses: parallel-markets/sha-storage-action@master
+        uses: parallel-markets/cache-result-action@master
 
   check:
     needs: check-sha-result
@@ -23,6 +23,6 @@ jobs:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/sha-storage-action@master
+      - uses: parallel-markets/cache-result-action@master
         with:
           result: success

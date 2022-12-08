@@ -29,8 +29,8 @@ const run = async () => {
 
     // inputResult will be 'unknown' if we're in "restore only" mode.
     const inputResult = core.getInput('result')
-    const key = 'sha-storage-action-' + sha + '-' + Math.floor(Date.now() / 1000)
-    const cacheKey = await cache.restoreCache([RESULT_PATH], key, ['sha-storage-action-' + sha])
+    const key = 'cache-result-action-' + sha + '-' + Math.floor(Date.now() / 1000)
+    const cacheKey = await cache.restoreCache([RESULT_PATH], key, ['cache-result-action-' + sha])
 
     let actualResult = inputResult
 
