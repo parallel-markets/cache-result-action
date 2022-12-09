@@ -10,32 +10,30 @@ jobs:
   check-sha-result:
     runs-on: ubuntu-latest
     outputs:
-      primary-result: ${{ steps.restore-cache.outputs.result }}
-      primary-deploy_sha: ${{ steps.restore-cache.outputs.deploy_sha }}
-      secondary-result: ${{ steps.restore-secondary-cache.outputs.result }}
-      secondary-deploy_sha: ${{ steps.restore-secondary-cache.outputs.deploy_sha }}
+      result: ${{ steps.restore-cache.outputs.result }}
+      optional-result: ${{ steps.restore-secondary-cache.outputs.result }}
     steps:
       - id: restore-cache
-        uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
+        uses: parallel-markets/cache-result-action@3e2834588306cffa8fd0249b7856ab29e6b5e0d8
 
       - id: restore-secondary-cache
-        uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
+        uses: parallel-markets/cache-result-action@3e2834588306cffa8fd0249b7856ab29e6b5e0d8
         with:
-          key-prefix: secondary
+          cache-group: optional
 
   check:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.check-sha-result.result }}
-      - run: echo ${{ needs.check-sha-result.outputs.primary-result }}
-      - run: echo ${{ needs.check-sha-result.outputs.secondary-result }}
+      - run: echo ${{ needs.check-sha-result.outputs.result }}
+      - run: echo ${{ needs.check-sha-result.outputs.optional-result }}
 
   test:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
+      - uses: parallel-markets/cache-result-action@3e2834588306cffa8fd0249b7856ab29e6b5e0d8
         with:
           result: success
 
@@ -43,7 +41,7 @@ jobs:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@c14afc09e4d0a0777f4d0b928ac11deb6f958db4
+      - uses: parallel-markets/cache-result-action@3e2834588306cffa8fd0249b7856ab29e6b5e0d8
         with:
           result: success
-          key-prefix: secondary
+          cache-group: optional
