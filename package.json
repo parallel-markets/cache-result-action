@@ -4,8 +4,7 @@
   "description": "Github Action for storing results from previous runs by SHA",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
-    "test": "jest",
+    "lint": "eslint src",
     "prepare": "ncc build src/index.js -o dist --source-map --license licenses.txt"
   },
   "author": "",

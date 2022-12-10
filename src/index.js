@@ -2,7 +2,6 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const cache = require('@actions/cache')
 const fs = require('fs')
-const os = require("os")
 
 const RESULT_PATH = '/tmp/prev-result'
 
@@ -11,12 +10,6 @@ const run = async () => {
   core.info(`Running for current SHA ${sha}`)
   
   try {
-    // These are the string names of the owner and repo
-    const { owner, repo } = github.context.repo
-
-    const token = core.getInput('token', { required: true })
-    const octokit = github.getOctokit(token)
-
     // inputResult will be 'unknown' if we're in "restore only" mode.
     const inputResult = core.getInput('result')
     const cacheGroup = core.getInput('cache-group')

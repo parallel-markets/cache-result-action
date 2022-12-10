@@ -5,10 +5,6 @@ inputs:
     description: 'The most recent result to store'
     required: true
     default: 'unknown'
-  token:
-    description: 'GitHub token for GitHub API requests'
-    required: true
-    default: ${{ github.token }}
   cache-group:
     description: >
       A string that will be added to the cache key when storing a result.
