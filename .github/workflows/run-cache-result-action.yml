@@ -2,11 +2,6 @@ name: run-cache-result-action
 on: push
 
 jobs:
-  print-current-sha:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ github.sha }}
-
   check-sha-result:
     runs-on: ubuntu-latest
     outputs:
@@ -14,26 +9,18 @@ jobs:
       optional-result: ${{ steps.restore-secondary-cache.outputs.result }}
     steps:
       - id: restore-cache
-        uses: parallel-markets/cache-result-action@f30dbd2dec2bc9ac09347ba38a884002e352b956
+        uses: parallel-markets/cache-result-action@bc6ad0498f85ba42e2ac6d523c69ee245e8cbbf5
 
       - id: restore-secondary-cache
-        uses: parallel-markets/cache-result-action@f30dbd2dec2bc9ac09347ba38a884002e352b956
+        uses: parallel-markets/cache-result-action@bc6ad0498f85ba42e2ac6d523c69ee245e8cbbf5
         with:
           cache-group: optional
-
-  check:
-    needs: check-sha-result
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ needs.check-sha-result.result }}
-      - run: echo ${{ needs.check-sha-result.outputs.result }}
-      - run: echo ${{ needs.check-sha-result.outputs.optional-result }}
 
   test:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@f30dbd2dec2bc9ac09347ba38a884002e352b956
+      - uses: parallel-markets/cache-result-action@bc6ad0498f85ba42e2ac6d523c69ee245e8cbbf5
         with:
           result: success
 
@@ -41,7 +28,7 @@ jobs:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@f30dbd2dec2bc9ac09347ba38a884002e352b956
+      - uses: parallel-markets/cache-result-action@bc6ad0498f85ba42e2ac6d523c69ee245e8cbbf5
         with:
           result: success
           cache-group: optional
