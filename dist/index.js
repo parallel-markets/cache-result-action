@@ -64924,7 +64924,6 @@ const core = __nccwpck_require__(2186)
 const github = __nccwpck_require__(5438)
 const cache = __nccwpck_require__(7799)
 const fs = __nccwpck_require__(7147)
-const os = __nccwpck_require__(2037)
 
 const RESULT_PATH = '/tmp/prev-result'
 
@@ -64933,26 +64932,13 @@ const run = async () => {
   core.info(`Running for current SHA ${sha}`)
   
   try {
-    // These are the string names of the owner and repo
-    const { owner, repo } = github.context.repo
-
-    const token = core.getInput('token', { required: true })
-    const octokit = github.getOctokit(token)
-
-    // Get the repo object, which contains the `default_branch` property.
-    const repoResult = await octokit.request('GET /repos/{owner}/{repo}', { owner, repo })
-    const defaultBranch = repoResult.data.default_branch
-    core.info(`Using default branch '${defaultBranch}'`)
-
-    // Fetch the current SHA of the default branch
-    const ref = `heads/${defaultBranch}`
-    const refResult = await octokit.rest.git.getRef({ owner, repo, ref })
-    core.info(`Found '${defaultBranch}' with SHA ${refResult.data.object.sha}`)
-
     // inputResult will be 'unknown' if we're in "restore only" mode.
     const inputResult = core.getInput('result')
-    const key = 'sha-storage-action-' + sha + '-' + Math.floor(Date.now() / 1000)
-    const cacheKey = await cache.restoreCache([RESULT_PATH], key, ['sha-storage-action-' + sha])
+    const cacheGroup = core.getInput('cache-group')
+    const keyPrefix = `cache-result-action-${cacheGroup}-${sha}`
+    const key = keyPrefix + '-' + Math.floor(Date.now() / 1000)
+
+    await cache.restoreCache([RESULT_PATH], key, [keyPrefix])
 
     let actualResult = inputResult
 
@@ -64971,14 +64957,13 @@ const run = async () => {
     }
 
     core.setOutput('result', actualResult)
-    core.setOutput('deploy_sha', refResult.data.object.sha)
 
     await core.summary
       .addTable([
         [{data: 'Output', header: true}, {data: 'Result', header: true}],
         ['result', actualResult],
+        ['cache_key', key],
         ['cache_outcome', cacheOutcome],
-        ['deploy_sha', refResult.data.object.sha]
       ])
       .write()
   } catch(error) {

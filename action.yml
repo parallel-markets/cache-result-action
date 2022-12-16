@@ -1,21 +1,19 @@
-name: 'SHA Storage'
+name: 'Cache Result'
 description: 'Github Action for storing results from previous runs by SHA'
 inputs:
   result:
     description: 'The most recent result to store'
     required: true
     default: 'unknown'
-  token:
+  cache-group:
     description: >
-      GitHub token for GitHub API requests.
-      When `repository` is modified, set to a personal access token with access to `repository`.
+      A string that will be added to the cache key when storing a result.
+      Defaults to the name of the workflow using the action.
     required: true
-    default: ${{ github.token }}
+    default: ${{ github.workflow }}
 outputs:
   result:
     description: 'Most recent result'
-  deploy_sha:
-    description: 'The current SHA of the default branch of the repo.'
 runs:
   using: 'node16'
   main: 'dist/index.js'

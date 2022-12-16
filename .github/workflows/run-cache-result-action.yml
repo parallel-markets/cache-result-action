@@ -1,0 +1,34 @@
+name: run-cache-result-action
+on: push
+
+jobs:
+  check-sha-result:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.restore-cache.outputs.result }}
+      optional-result: ${{ steps.restore-secondary-cache.outputs.result }}
+    steps:
+      - id: restore-cache
+        uses: parallel-markets/cache-result-action@ebeb91ce76e69649eb0f073225c335373e15fc41
+
+      - id: restore-secondary-cache
+        uses: parallel-markets/cache-result-action@ebeb91ce76e69649eb0f073225c335373e15fc41
+        with:
+          cache-group: optional
+
+  test:
+    needs: check-sha-result
+    runs-on: ubuntu-latest
+    steps:
+      - uses: parallel-markets/cache-result-action@ebeb91ce76e69649eb0f073225c335373e15fc41
+        with:
+          result: success
+
+  optional-test:
+    needs: check-sha-result
+    runs-on: ubuntu-latest
+    steps:
+      - uses: parallel-markets/cache-result-action@ebeb91ce76e69649eb0f073225c335373e15fc41
+        with:
+          result: success
+          cache-group: optional

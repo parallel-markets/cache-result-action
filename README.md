@@ -2,12 +2,18 @@
 
 Store a result for a given commit SHA in a repo.
 
+## Inputs
+
+|name|description|
+|-|-|
+|`result`| The string result to be stored in the cache. If unspecified, the action will run in "restore only" mode.|
+|`cache-group`|A string that will be added to the cache key. Defaults to the name of the current workflow.|
+
 ## Outputs
 
 |name|description|
 |-|-|
 |`result`| The string result of the action, either `'unknown'` or the given `result` value.|
-|`deploy_sha`| The current SHA of the default branch of the repo. This is useful when implementing a tag-based deployment strategy|
 
 ## Examples
 
