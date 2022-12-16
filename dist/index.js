@@ -64935,9 +64935,10 @@ const run = async () => {
     // inputResult will be 'unknown' if we're in "restore only" mode.
     const inputResult = core.getInput('result')
     const cacheGroup = core.getInput('cache-group')
-    const key = ['cache-result-action', cacheGroup, sha, Math.floor(Date.now() / 1000)].filter(Boolean).join('-')
+    const keyPrefix = `cache-result-action-${cacheGroup}-${sha}`
+    const key = keyPrefix + '-' + Math.floor(Date.now() / 1000)
 
-    await cache.restoreCache([RESULT_PATH], key, ['cache-result-action-' + sha])
+    await cache.restoreCache([RESULT_PATH], key, [keyPrefix])
 
     let actualResult = inputResult
 
