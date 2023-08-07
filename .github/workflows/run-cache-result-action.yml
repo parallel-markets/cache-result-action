@@ -9,10 +9,10 @@ jobs:
       optional-result: ${{ steps.restore-secondary-cache.outputs.result }}
     steps:
       - id: restore-cache
-        uses: parallel-markets/cache-result-action@081f941880f769d9b3fdcf63c97ff4d4f57d8840
+        uses: parallel-markets/cache-result-action@f6b4cbf83108f6b777dfc78925e71da352189d05
 
       - id: restore-secondary-cache
-        uses: parallel-markets/cache-result-action@081f941880f769d9b3fdcf63c97ff4d4f57d8840
+        uses: parallel-markets/cache-result-action@f6b4cbf83108f6b777dfc78925e71da352189d05
         with:
           cache-group: optional
 
@@ -20,7 +20,7 @@ jobs:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@081f941880f769d9b3fdcf63c97ff4d4f57d8840
+      - uses: parallel-markets/cache-result-action@f6b4cbf83108f6b777dfc78925e71da352189d05
         with:
           result: success
 
@@ -28,7 +28,7 @@ jobs:
     needs: check-sha-result
     runs-on: ubuntu-latest
     steps:
-      - uses: parallel-markets/cache-result-action@081f941880f769d9b3fdcf63c97ff4d4f57d8840
+      - uses: parallel-markets/cache-result-action@f6b4cbf83108f6b777dfc78925e71da352189d05
         with:
           result: success
           cache-group: optional
