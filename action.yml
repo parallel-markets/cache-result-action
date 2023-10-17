@@ -1,10 +1,10 @@
-name: 'Cache Result'
-description: 'Github Action for storing results from previous runs by SHA'
+name: "Cache Result"
+description: "Github Action for storing results from previous runs by SHA"
 inputs:
   result:
-    description: 'The most recent result to store'
+    description: "The most recent result to store"
     required: true
-    default: 'unknown'
+    default: "unknown"
   cache-group:
     description: >
       A string that will be added to the cache key when storing a result.
@@ -13,7 +13,7 @@ inputs:
     default: ${{ github.workflow }}
 outputs:
   result:
-    description: 'Most recent result'
+    description: "Most recent result"
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node18"
+  main: "dist/index.js"
