@@ -15,5 +15,5 @@ outputs:
   result:
     description: "Most recent result"
 runs:
-  using: "node18"
+  using: "node20"
   main: "dist/index.js"
