@@ -4,16 +4,16 @@ Store a result for a given commit SHA in a repo.
 
 ## Inputs
 
-|name|description|
-|-|-|
-|`result`| The string result to be stored in the cache. If unspecified, the action will run in "restore only" mode.|
-|`cache-group`|A string that will be added to the cache key. Defaults to the name of the current workflow.|
+| name          | description                                                                                              |
+| ------------- | -------------------------------------------------------------------------------------------------------- |
+| `result`      | The string result to be stored in the cache. If unspecified, the action will run in "restore only" mode. |
+| `cache-group` | A string that will be added to the cache key. Defaults to the name of the current workflow.              |
 
 ## Outputs
 
-|name|description|
-|-|-|
-|`result`| The string result of the action, either `'unknown'` or the given `result` value.|
+| name     | description                                                                      |
+| -------- | -------------------------------------------------------------------------------- |
+| `result` | The string result of the action, either `'unknown'` or the given `result` value. |
 
 ## Examples
 
@@ -25,12 +25,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: last-run
-        uses: parallel-markets/cache-result-action@master
+        uses: parallel-markets/cache-result-action@v1.0.0
 
       - run: make test
         if: steps.last-run.outputs.result != 'success'
 
-      - uses: parallel-markets/cache-result-action@master
+      - uses: parallel-markets/cache-result-action@v1.0.0
         with:
           result: success
 ```
@@ -45,7 +45,7 @@ jobs:
       prev-result: ${{ steps.last-run.outputs.result }}
     steps:
       - id: last-run
-        uses: parallel-markets/cache-result-action@master
+        uses: parallel-markets/cache-result-action@v1.0.0
 
   test:
     runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ jobs:
     if: needs.fetch-prev-result.outputs.prev_result != 'success'
     steps:
       - run: make test
-      - uses: parallel-markets/cache-result-action@master
+      - uses: parallel-markets/cache-result-action@v1.0.0
         with:
           result: success
 ```
