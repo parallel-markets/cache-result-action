@@ -1,8 +1,11 @@
 name: run-cache-result-action
 on: push
 
-# edge should point to master or a branch commit to verify
+# tag: `edge` should point to master or a branch commit to verify
 # that a change is valid before merging.
+
+# To update edge to the current commit, use:
+# $ git tag -f edge HEAD; git push -f origin edge
 
 jobs:
   check-sha-result:
