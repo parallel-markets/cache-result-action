@@ -1,6 +1,6 @@
 {
   "name": "cache-result-action",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "Github Action for storing results from previous runs by SHA",
   "main": "index.js",
   "scripts": {

@@ -57,3 +57,9 @@ jobs:
         with:
           result: success
 ```
+
+## Development
+
+When opening a PR, update the `edge` tag to ensure that `.github/workflows/run-cache-result-action.yml` exercises any changes prior to merging. Additionally, update the version in `package.json` according to semver as appropriate.
+
+After merging, update version tags (e.g., `v1` and `v1.0.1`) according to semver, as appropriate. As a courtesy, also update `edge` to point to the latest commit.
