@@ -5,7 +5,7 @@ on: push
 # that a change is valid before merging.
 
 # To update edge to the current commit, use:
-# $ git tag -f edge HEAD; git push -f origin edge
+# $ git tag -f edge HEAD && git push -f origin edge
 
 jobs:
   check-sha-result:
