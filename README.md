@@ -25,12 +25,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: last-run
-        uses: parallel-markets/cache-result-action@v1.0.0
+        uses: parallel-markets/cache-result-action@v2
 
       - run: make test
         if: steps.last-run.outputs.result != 'success'
 
-      - uses: parallel-markets/cache-result-action@v1.0.0
+      - uses: parallel-markets/cache-result-action@v2
         with:
           result: success
 ```
@@ -45,7 +45,7 @@ jobs:
       prev-result: ${{ steps.last-run.outputs.result }}
     steps:
       - id: last-run
-        uses: parallel-markets/cache-result-action@v1.0.0
+        uses: parallel-markets/cache-result-action@v2
 
   test:
     runs-on: ubuntu-latest
@@ -53,7 +53,19 @@ jobs:
     if: needs.fetch-prev-result.outputs.prev_result != 'success'
     steps:
       - run: make test
-      - uses: parallel-markets/cache-result-action@v1.0.0
+      - uses: parallel-markets/cache-result-action@v2
         with:
           result: success
 ```
+
+## Development
+
+When opening a PR, update the `edge` tag to ensure that `.github/workflows/run-cache-result-action.yml` exercises any changes prior to merging. Additionally, update the version in `package.json` according to semver as appropriate. If the change warrants a major release, update the [examples above](#examples).
+
+### Releasing
+
+After merging, update version tags according to semver, as appropriate. As a courtesy, also update `edge` to point to the latest commit.
+
+To update edge to the current commit, use:
+
+    $ git tag -f edge HEAD && git push -f origin edge
