@@ -61843,6 +61843,14 @@ module.exports = require("path");
 
 /***/ }),
 
+/***/ 7282:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("process");
+
+/***/ }),
+
 /***/ 5477:
 /***/ ((module) => {
 
@@ -61968,6 +61976,7 @@ const core = __nccwpck_require__(2186)
 const github = __nccwpck_require__(5438)
 const cache = __nccwpck_require__(7799)
 const fs = __nccwpck_require__(7147)
+const process = __nccwpck_require__(7282)
 
 const RESULT_PATH = '/tmp/prev-result'
 
@@ -61981,14 +61990,13 @@ const run = async () => {
     const cacheGroup = core.getInput('cache-group')
     const keyPrefix = `cache-result-action-${cacheGroup}-${sha}`
     const key = keyPrefix + '-' + Math.floor(Date.now() / 1000)
-
+    
     await cache.restoreCache([RESULT_PATH], key, [keyPrefix])
 
     let actualResult = inputResult
 
     // True if we have a previous result already.
     const cacheHit = !!fs.existsSync(RESULT_PATH)
-
     let cacheOutcome = cacheHit ? 'hit' : 'miss'
 
     // If the result is 'unknown' then we won't save it to the cache; we're in "restore only" mode.
@@ -62000,18 +62008,22 @@ const run = async () => {
       actualResult = fs.readFileSync(RESULT_PATH, { encoding: 'utf8' })
     }
 
+    const resultSummary = [
+      [{data: 'Output', header: true}, {data: 'Result', header: true}],
+      ['result', actualResult],
+      ['cache_key', key],
+      ['cache_outcome', cacheOutcome],
+    ]
+    
     core.setOutput('result', actualResult)
-
-    await core.summary
-      .addTable([
-        [{data: 'Output', header: true}, {data: 'Result', header: true}],
-        ['result', actualResult],
-        ['cache_key', key],
-        ['cache_outcome', cacheOutcome],
-      ])
-      .write()
+    await core.summary.addTable(resultSummary).write()
+    
+    // https://github.com/actions/toolkit/issues/1578
+    core.info('All done. Forcing clean exit to avoid process hanging.')
+    process.exit(0)
   } catch(error) {
     core.setFailed(error.message)
+    process.exit(1)
   }
 }
 
