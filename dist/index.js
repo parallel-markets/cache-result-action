@@ -61983,14 +61983,14 @@ const RESULT_PATH = '/tmp/prev-result'
 const run = async () => {
   const sha = github.context.sha
   core.info(`Running for current SHA ${sha}`)
-  
+
   try {
     // inputResult will be 'unknown' if we're in "restore only" mode.
     const inputResult = core.getInput('result')
     const cacheGroup = core.getInput('cache-group')
     const keyPrefix = `cache-result-action-${cacheGroup}-${sha}`
     const key = keyPrefix + '-' + Math.floor(Date.now() / 1000)
-    
+
     await cache.restoreCache([RESULT_PATH], key, [keyPrefix])
 
     let actualResult = inputResult
@@ -62014,10 +62014,10 @@ const run = async () => {
       ['cache_key', key],
       ['cache_outcome', cacheOutcome],
     ]
-    
+
     core.setOutput('result', actualResult)
     await core.summary.addTable(resultSummary).write()
-    
+
     // https://github.com/actions/toolkit/issues/1578
     core.info('All done. Forcing clean exit to avoid process hanging.')
     process.exit(0)
