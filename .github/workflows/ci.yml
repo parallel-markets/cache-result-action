@@ -8,8 +8,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.11.1
+          node-version: 22.4.0
       - name: Install deps and build dist
         run: npm i
+
+      - name: Check for unexpected dist changes
+        run: git diff --quiet
 
       - run: npm run lint
