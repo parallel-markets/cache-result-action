@@ -4,7 +4,7 @@ build:
 
 test:
 	npm run lint
-	git diff --quiet || echo 'Did you forget to run `make build`?'
+	@git diff --quiet dist/ || echo 'Found uncommitted changes in `dist/`! Did you forget to run `make build` and commit the result?'
 
 tag-edge:
 	git tag -f edge HEAD && git push -f origin edge
