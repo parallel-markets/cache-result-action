@@ -1,4 +1,4 @@
-const core = require('@actions/core')
+import core from '@actions/core'
 const github = require('@actions/github')
 import cache from '@actions/cache'
 const fs = require('fs')
