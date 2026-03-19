@@ -1,8 +1,9 @@
-const core = require('@actions/core')
-const github = require('@actions/github')
-const cache = require('@actions/cache')
-const fs = require('fs')
-const process = require('process')
+import fs from 'node:fs'
+import process from 'node:process'
+
+const core = await import('@actions/core')
+const github = await import('@actions/github')
+const cache = await import('@actions/cache')
 
 const RESULT_PATH = '/tmp/prev-result'
 
