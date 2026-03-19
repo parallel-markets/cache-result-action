@@ -1,6 +1,6 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
-const cache = require('@actions/cache')
+import cache from '@actions/cache'
 const fs = require('fs')
 const process = require('process')
 
