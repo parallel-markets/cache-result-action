@@ -1,8 +1,8 @@
 import core from '@actions/core'
-const github = require('@actions/github')
+import github from '@actions/github'
 import cache from '@actions/cache'
-const fs = require('fs')
-const process = require('process')
+import fs from 'node:fs'
+import process from 'node:process'
 
 const RESULT_PATH = '/tmp/prev-result'
 
